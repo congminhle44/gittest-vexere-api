@@ -6,10 +6,15 @@ const app = express();
 const config = require("./config");
 
 console.log(config);
-const port = process.env.PORT || config.port;
-app.listen(port, () => {
-  console.log("App is listening to port", port);
-});
+
+mongoose
+  .connect("mongodb://localhost:27017/vexere-practice", {
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to vexere server"))
+  .catch((err) => console.log(err));
 
 // Station api
 app.use("/api", require("./Routes/api/Controller/stations"));
@@ -23,11 +28,7 @@ app.use("/api", require("./Routes/api/Controller/users"));
 // Ticket api
 app.use("/api", require("./Routes/api/Controller/tickets"));
 
-mongoose
-  .connect("mongodb://localhost:27017/vexere-practice", {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to vexere server"))
-  .catch((err) => console.log(err));
+const port = process.env.PORT || config.port;
+app.listen(port, () => {
+  console.log(`App is listening to port ${port}`);
+});
