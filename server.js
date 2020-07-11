@@ -8,7 +8,7 @@ const config = require("./config");
 console.log(config);
 
 mongoose
-  .connect("mongodb://localhost:27017/vexere-practice", {
+  .connect(config.mongoUri, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
